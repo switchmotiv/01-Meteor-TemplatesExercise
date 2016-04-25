@@ -4,8 +4,12 @@
 #   - ensuring you don't accidentally deploy one app on top of another
 #   - providing package authors with aggregated statistics
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 nyxwfd1glxejv1arh645
 =======
 1vdt52yv1mwmg1gh3vuu
 >>>>>>> Stashed changes
+=======
+1vdt52yv1mwmg1gh3vuu
+>>>>>>> 02-Collections
