@@ -11,9 +11,10 @@
     </div>
     <div class="collapse navbar-collapse" id="navigation">
       <ul class="nav navbar-nav">
-        <li>
-          <a href="{{pathFor 'postSubmit'}}">Submit Post</a>
-        </li>
+        <!-- The currentUser helper is provided to us by the accounts package and is the Spacebars
+        equivalent of Meteor.user(). Since it's reactive, the link will appear or disappear as you
+        log in and out of the app.-->
+        {{#if currentUser}}<li> <a href="{{pathFor 'postSubmit'}}">Create New Post</a> </li>{{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{> loginButtons}}
