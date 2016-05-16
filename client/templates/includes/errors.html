@@ -1,0 +1,19 @@
+<!-- Twin Templates
+You'll notice we're putting two templates in a single file. Up to now we've tried to adhere to a "one file,
+one template" convention, but as far as Meteor is concerned putting all our templates in a single file works just
+as well (although it would make for a very confusing main.html!).
+In this case, since both error templates are fairly short, we'll make an exception and put them in the same file to make our repo a bit cleaner. -->
+<template name="errors">
+  <div class="errors">
+    {{#each errors}}
+      {{> error}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="error">
+  <div class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{message}}
+  </div>
+</template>

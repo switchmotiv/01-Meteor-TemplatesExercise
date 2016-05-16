@@ -1,0 +1,24 @@
+<template name="header">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{pathFor 'postsList'}}">Telescope</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navigation">
+      <ul class="nav navbar-nav">
+        <!-- The currentUser helper is provided to us by the accounts package and is the Spacebars
+        equivalent of Meteor.user(). Since it's reactive, the link will appear or disappear as you
+        log in and out of the app.-->
+        {{#if currentUser}}<li> <a href="{{pathFor 'postSubmit'}}">Create New Post</a> </li>{{/if}}
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{> loginButtons}}
+      </ul>
+    </div>
+  </nav>
+</template>
