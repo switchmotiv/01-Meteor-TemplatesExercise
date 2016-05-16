@@ -1,3 +1,25 @@
+// We'll use the Session to store a postSubmitErrors object containing any potential error message.
+// As the user interacts with the form, this object will change, which in turn will reactively
+// update the form's markup and contents.
+
+// First, we'll initialize the object whenever the postSubmit template is created.
+// This ensures that the user won't see old error messages left over from a previous visit to this page.
+Template.postSubmit.onCreated(function() {
+  Session.set('postSubmitErrors', {});
+});
+
+// We then define our two template helpers. They both look at the field property of
+// Session.get('postSubmitErrors') (where field is either url or title depending on where
+// we're calling the helper from).
+Template.postSubmit.helpers({
+  errorMessage: function(field) {
+    return Session.get('postSubmitErrors')[field];
+  },
+  errorClass: function (field) {
+    return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
+  }
+});
+
 Template.postSubmit.events ({
   // submit is better than click because it covers all ways of submitting such as hitting 'enter'
   'submit form': function(e) {
@@ -7,6 +29,11 @@ Template.postSubmit.events ({
       url: $(e.target).find('[name=url]').val(),
       title: $(e.target).find('[name=title]').val()
     };
+
+    var errors = validatePost(post);
+    if (errors.title || errors.url)
+      return Session.set('postSubmitErrors', errors);
+
 
     // The Meteor.call function calls a Method named by its first argument.
     // You can provide arguments to the call (in this case, the post object we constructed from the form),
@@ -19,10 +46,11 @@ Template.postSubmit.events ({
     Meteor.call('postInsert', post, function(error, result) {
       // display the error to the user an abort
       if (error)
-        return alert(error.reason);
+        return throwError(error.reason);
 
+      // show this result but route anyway
       if (result.postExists)
-        alert('This link has already been posted');
+        throwError('This link has already been posted');
 
       Router.go('postPage', {_id: result._id});
     });
